@@ -14,7 +14,8 @@ RSpec.describe Strings::Numeral, "#cardinalize" do
     1234 => "one thousand, two hundred thirty four",
     12345 => "twelve thousand, three hundred forty five",
     123456 => "one hundred twenty three thousand, four hundred fifty six",
-    1234567 => "one million, two hundred thirty four thousand, five hundred sixty seven"
+    1234567 => "one million, two hundred thirty four thousand, five hundred sixty seven",
+    -125 => "negative one hundred twenty five",
   }.each do |num, word|
     it "cardinalizes #{num.inspect} to #{word.inspect}" do
       expect(Strings::Numeral.cardinalize(num)).to eq(word)

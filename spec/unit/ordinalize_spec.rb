@@ -30,6 +30,7 @@ RSpec.describe Strings::Numeral, "#ordinalize" do
     12345 => "twelve thousand, three hundred forty fifth",
     123456 => "one hundred twenty three thousand, four hundred fifty sixth",
     1234567 => "one million, two hundred thirty four thousand, five hundred sixty seventh",
+    -125 => "negative one hundred twenty fifth",
   }.each do |num, word|
     it "ordinalizes #{num.inspect} to #{word.inspect}" do
       expect(Strings::Numeral.ordinalize(num)).to eq(word)

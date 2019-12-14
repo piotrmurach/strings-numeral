@@ -175,16 +175,21 @@ module Strings
     #   the number as numeral
     #
     # @api private
-    def convert_numeral(num)
-      n = num.to_i
+    def convert_numeral(num, delimiter: ",")
+      negative = num < 0
+      n = num.to_i.abs
 
-      words = convert_to_words(n)
+      sentence = convert_to_words(n).join("#{delimiter} ")
 
-      if words.join.empty?
+      if sentence.empty?
         return "zero"
       end
 
-      words.join(", ")
+      if negative
+        sentence = "negative " + sentence
+      end
+
+      sentence
     end
     module_function :convert_numeral
 
