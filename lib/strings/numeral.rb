@@ -177,6 +177,25 @@ module Strings
     # @api private
     def convert_numeral(num)
       n = num.to_i
+
+      words = convert_to_words(n)
+
+      if words.join.empty?
+        return "zero"
+      end
+
+      words.join(", ")
+    end
+    module_function :convert_numeral
+
+    # Convert an integer to number words
+    #
+    # @param [Integer] n
+    #
+    # @return [Array[String]]
+    #
+    # @api public
+    def convert_to_words(n)
       words = []
 
       SCALES.each_with_index do |scale, i|
@@ -193,13 +212,9 @@ module Strings
         break if n.zero?
       end
 
-      if words.join.empty?
-        return "zero"
-      end
-
-      words.join(", ")
+      words
     end
-    module_function :convert_numeral
+    module_function :convert_to_words
 
     # Convert 3 digit number to equivalent word
     #
