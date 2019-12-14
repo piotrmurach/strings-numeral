@@ -40,6 +40,27 @@ Or install it yourself as:
 
 ## Usage
 
+To convert a number to a cardinal numeral:
+
+```ruby
+Strings::Numeral.cardinalize(1234)
+# => one thousand, two hundred thirty four
+```
+
+Or to convert a number to to a ordinal numeral:
+
+```ruby
+Strings::Numeral.ordinalize(1234)
+# => one thousand, two hundred thirty fourth
+```
+
+You can convert a number to a short ordinal:
+
+```ruby
+Strings::Numeral.ordinalize(1234, short: true)
+# => 1234th
+```
+
 ## Development
 
 After checking out the repo, run `bin/setup` to install dependencies. Then, run `rake spec` to run the tests. You can also run `bin/console` for an interactive prompt that will allow you to experiment.
