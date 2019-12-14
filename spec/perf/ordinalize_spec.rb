@@ -8,9 +8,9 @@ RSpec.describe Strings::Numeral do
 
   it "converts number to short ordinal faster than ActiveSupport" do
     expect {
-      Strings::Numeral.ordinalize(12345)
+      Strings::Numeral.ordinalize(12345, short: true)
     }.to perform_faster_than {
       ActiveSupport::Inflector.ordinalize(12345)
-    }.at_least(500).times
+    }.at_least(400).times
   end
 end
