@@ -35,7 +35,7 @@ module Strings
       70 => "seventy",
       80 => "eighty",
       90 => "ninety",
-    }
+    }.freeze
 
     CARDINAL_TO_SHORT_ORDINAL = {
       0 => "th",
@@ -51,6 +51,37 @@ module Strings
       7 => "th",
       8 => "th",
       9 => "th"
+    }.freeze
+
+    CARDINAL_TO_ORDINAL = {
+      "zero" => "zeroth",
+      "one" => "first",
+      "two" => "second",
+      "three" => "third",
+      "four" => "fourth",
+      "five" => "fifth",
+      "six" => "sixth",
+      "seven" => "seventh",
+      "eight" => "eighth",
+      "nine" => "ninth",
+      "ten" => "tenth",
+      "eleven" => "eleventh",
+      "twelve" => "twelfth",
+      "thirteen" => "thirteenth",
+      "fourteen" => "fourteenth",
+      "fifteen" => "fifteenth",
+      "sixteen" =>  "sixteenth",
+      "seventeen" =>  "seventeenth",
+      "eighteen" =>  "eighteenth",
+      "nineteen" =>  "nineteenth",
+      "twenty" =>  "twentieth",
+      "thirty" =>  "thirtieth",
+      "forty" => "fortieth",
+      "fifty" => "fiftieth",
+      "sixty" => "sixtieth",
+      "seventy" => "seventieth",
+      "eighty" => "eightieth",
+      "ninety" => "ninetieth"
     }.freeze
 
     SCALES = [
@@ -76,7 +107,7 @@ module Strings
       "octodecillion",
       "novemdecillion",
       "vigintillion"
-    ]
+    ].freeze
 
     # Convert a number to a cardinal numeral
     #
@@ -96,14 +127,38 @@ module Strings
     alias :cardinalise :cardinalize
     module_function :cardinalise
 
-    def ordinalize(num)
-      num.to_s + short_ordinalize(num)
+    # Convert a number to an ordinal numeral
+    #
+    # @example
+    #   ordinalize(1234)
+    #   # => one thousand, two hundred thirty fourth
+    #
+    #   ordinalize(12, short: true) # => 12th
+    #
+    # @param [Numeric]
+    #
+    # @api public
+    def ordinalize(num, short: false)
+      if short
+        num.to_s + short_ordinalize(num)
+      else
+        sentence = convert_numeral(num)
+        if sentence =~ /(\w+)$/
+          last_digits = $1
+          suffix = CARDINAL_TO_ORDINAL[last_digits]
+          if suffix
+            sentence[0...-last_digits.size] + suffix
+          else
+            sentence
+          end
+        end
+      end
     end
     module_function :ordinalize
     alias :ordinalise :ordinalize
     module_function :ordinalise
 
-    def short_ordinalize(num)
+    def short_ordinalize(num, short: false)
       num_abs = num.abs
 
       CARDINAL_TO_SHORT_ORDINAL[num_abs % 100] ||
