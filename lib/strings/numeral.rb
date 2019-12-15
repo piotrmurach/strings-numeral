@@ -175,22 +175,23 @@ module Strings
         num.to_s + short_ordinalize(num)
       else
         sentence = convert_numeral(num)
+
         if sentence =~ /(\w+) and/
           last_digits = $1
-          suffix = CARDINAL_TO_ORDINAL[last_digits]
-          if suffix
-            sentence.sub(/#{last_digits} and/, "#{suffix} and")
-          else
-            sentence
-          end
+          replacement = CARDINAL_TO_ORDINAL[last_digits]
+          pattern = /#{last_digits} and/
+          suffix = "#{replacement} and"
         elsif sentence =~ /(\w+)$/
           last_digits = $1
-          suffix = CARDINAL_TO_ORDINAL[last_digits]
-          if suffix
-            sentence[0...-last_digits.size] + suffix
-          else
-            sentence
-          end
+          replacement = CARDINAL_TO_ORDINAL[last_digits]
+          pattern = /#{last_digits}$/
+          suffix = replacement
+        end
+
+        if replacement
+          sentence.sub(pattern, suffix)
+        else
+          sentence
         end
       end
     end
