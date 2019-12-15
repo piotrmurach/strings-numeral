@@ -173,17 +173,18 @@ module Strings
     # @param [Numeric]
     #
     # @api public
-    def ordinalize(num, short: false)
+    def ordinalize(num, short: false, decimal: :fraction)
       if short
         num.to_s + short_ordinalize(num)
       else
-        sentence = convert_numeral(num)
+        sentence = convert_numeral(num, decimal: decimal)
 
-        if sentence =~ /(\w+) and/
+        if sentence =~ /(\w+) (and|point)/
           last_digits = $1
+          separator = $2
           replacement = CARDINAL_TO_ORDINAL[last_digits]
-          pattern = /#{last_digits} and/
-          suffix = "#{replacement} and"
+          pattern = /#{last_digits} #{separator}/
+          suffix = "#{replacement} #{separator}"
         elsif sentence =~ /(\w+)$/
           last_digits = $1
           replacement = CARDINAL_TO_ORDINAL[last_digits]

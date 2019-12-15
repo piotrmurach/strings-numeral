@@ -44,4 +44,19 @@ RSpec.describe Strings::Numeral, "#ordinalize" do
       expect(Strings::Numeral.ordinalize(num)).to eq(word)
     end
   end
+
+  {
+    0.1 => "zeroth point one",
+    0.21 => "zeroth point two one",
+    1.23 => "first point two three",
+    12.003 => "twelfth point zero zero three",
+    123.456 => "one hundred twenty third point four five six",
+    -114.5678 => "negative one hundred fourteenth point five six seven eight",
+    1234.567 => "one thousand, two hundred thirty fourth point five six seven",
+    -3456.07 => "negative three thousand, four hundred fifty sixth point zero seven"
+  }.each do |num, word|
+    it "ordinalizes #{num.inspect} to #{word.inspect}" do
+      expect(Strings::Numeral.ordinalize(num, decimal: :digit)).to eq(word)
+    end
+  end
 end
