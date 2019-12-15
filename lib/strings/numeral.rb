@@ -109,6 +109,38 @@ module Strings
       "vigintillion"
     ].freeze
 
+    DECIMAL_SLOTS = [
+      "tenths",
+      "hundredths",
+      "thousandths",
+      "ten-thousandths",
+      "hundred-thousandths",
+      "millionths",
+      "ten-millionths",
+      "hundred-millionths",
+      "billionths",
+      "ten-billionths",
+      "hundred-billionths",
+      "trillionths",
+      "quadrillionths",
+      "quintillionths",
+      "sextillionths",
+      "septillionths",
+      "octillionths",
+      "nonillionths",
+      "decillionths",
+      "undecillionths",
+      "duodecillionths",
+      "tredecillionths",
+      "quattuordecillionths",
+      "quindecillionths",
+      "sexdecillionths",
+      "septemdecillionths",
+      "octodecillionths",
+      "novemdecillionths",
+      "vigintillionths"
+    ].freeze
+
     # Convert a number to a cardinal numeral
     #
     # @example
@@ -120,8 +152,8 @@ module Strings
     # @return [String]
     #
     # @api public
-    def cardinalize(num)
-      convert_numeral(num)
+    def cardinalize(num, **options)
+      convert_numeral(num, **options)
     end
     module_function :cardinalize
     alias :cardinalise :cardinalize
@@ -178,20 +210,38 @@ module Strings
     def convert_numeral(num, delimiter: ",")
       negative = num < 0
       n = num.to_i.abs
+      decimal = (n != num.abs)
 
       sentence = convert_to_words(n).join("#{delimiter} ")
 
       if sentence.empty?
-        return "zero"
+        sentence = "zero"
       end
 
       if negative
         sentence = "negative " + sentence
       end
 
+      if decimal
+        sentence = sentence + " and " + convert_decimals(num)
+      end
+
       sentence
     end
     module_function :convert_numeral
+
+    # Convert decimal part to words
+    #
+    # @return [String]
+    #
+    # @api private
+    def convert_decimals(num, delimiter: ",")
+      dec_num = num.to_s.split(".")[1]
+      unit = DECIMAL_SLOTS[dec_num.to_s.length - 1]
+
+      convert_to_words(dec_num.to_i).join("#{delimiter} ") + " " + unit
+    end
+    module_function :convert_decimals
 
     # Convert an integer to number words
     #
