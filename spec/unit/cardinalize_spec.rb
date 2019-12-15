@@ -55,4 +55,9 @@ RSpec.describe Strings::Numeral, "#cardinalize" do
     expect(Strings::Numeral.cardinalize(1_234_567, delimiter: " and ")).
       to eq("one million and two hundred thirty four thousand and five hundred sixty seven")
   end
+
+  it "changes a separator between fractional and integer numerals" do
+    expect(Strings::Numeral.cardinalize(1_234.567, separator: "dot")).
+      to eq("one thousand, two hundred thirty four dot five hundred sixty seven thousandths")
+  end
 end

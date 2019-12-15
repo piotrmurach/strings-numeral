@@ -8,6 +8,8 @@ module Strings
 
     NEGATIVE = "negative"
     ZERO = "zero"
+    AND = "and"
+    POINT = "point"
 
     CARDINALS = {
       0 => "",
@@ -173,13 +175,15 @@ module Strings
     # @param [Numeric]
     #
     # @api public
-    def ordinalize(num, short: false, decimal: :fraction)
-      if short
+    def ordinalize(num, **options)
+      if options[:short]
         num.to_s + short_ordinalize(num)
       else
-        sentence = convert_numeral(num, decimal: decimal)
+        decimals = (num.to_i.abs != num.abs)
+        sentence = convert_numeral(num, **options)
+        separators = [AND, POINT, options[:separator]].compact
 
-        if sentence =~ /(\w+) (and|point)/
+        if decimals && sentence =~ /(\w+) (#{Regexp.union(separators)})/
           last_digits = $1
           separator = $2
           replacement = CARDINAL_TO_ORDINAL[last_digits]
@@ -215,12 +219,19 @@ module Strings
     #
     # @param [Numeric] num
     #   the number to convert to numeral
+    # @param [String] delimiter
+    #   sets the thousand's delimiter, defaults to `, `
+    # @param [String] decimal
+    #   the decimal word conversion, defaults to `:fraction`
+    # @param [String] separator
+    #   sets the separator between the fractional and integer numerals,
+    #   defaults to `and` for fractions and `point` for digits
     #
     # @return [String]
     #   the number as numeral
     #
     # @api private
-    def convert_numeral(num, delimiter: ", ", decimal: :fraction)
+    def convert_numeral(num, delimiter: ", ", decimal: :fraction, separator: nil)
       negative = num < 0
       n = num.to_i.abs
       decimals = (n != num.abs)
@@ -236,8 +247,9 @@ module Strings
       end
 
       if decimals
-        sentence = sentence + (decimal == :fraction ? " and " : " point ") +
-          convert_decimals(num, delimiter: delimiter, decimal: decimal)
+        sentence = sentence + " " +
+          (separator.nil? ? (decimal == :fraction ? AND : POINT) : separator) +
+          " " + convert_decimals(num, delimiter: delimiter, decimal: decimal)
       end
 
       sentence
