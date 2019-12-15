@@ -268,6 +268,7 @@ module Strings
       case decimal
       when :fraction
         unit = DECIMAL_SLOTS[dec_num.to_s.length - 1]
+        unit = unit[0...-1] if dec_num.to_i == 1 # strip off 's'
         convert_to_words(dec_num.to_i).join(delimiter) + SPACE + unit
       when :digit
         dec_num.chars.map do |n|
