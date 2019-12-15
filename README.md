@@ -20,7 +20,12 @@
 
 > Express numbers as string numerals.
 
-**Strings::Numeral** provides conversions of numbers to numerals [Strings](https://github.com/piotrmurach/strings).
+**Strings::Numeral** provides conversions of numbers to numerals component for [Strings](https://github.com/piotrmurach/strings).
+
+## Features
+
+* No monkey-patching String class
+* Functional API that can be easily wrapped by other objects
 
 ## Installation
 
@@ -38,16 +43,34 @@ Or install it yourself as:
 
     $ gem install strings-numeral
 
-## Usage
+## Contents
 
-To convert a number to a cardinal numeral:
+* [1. Usage](#1-usage)
+* [2. API](#2-api)
+  * [2.1 numeralize](#21-numeralize)
+  * [2.2 cardinalize](#22-cardinalize)
+  * [2.3 ordinalize](#23-ordinalize)
+* [3. Extending String class](#3-extending-string-class)
+
+## 1. Usage
+
+**Strings::Numeral** aims to express any number as a numeral in words. To do this it provides few methods. For example, to express a number as a cardinal numeral use `cardinalize`:
 
 ```ruby
 Strings::Numeral.cardinalize(1234)
 # => one thousand, two hundred thirty four
 ```
 
-Or to convert a number to to a ordinal numeral:
+But you're not limited to converting integers only. It can handle decimals as well:
+
+```ruby
+Strings::Numeral.cardinalize(1234.567)
+# => "one thousand, two hundred thirty four and five hundred sixty seven thousandths"
+```
+
+For more options on how to customize see [configuration](#24-configuration)
+
+To convert a number to to a ordinal numeral:
 
 ```ruby
 Strings::Numeral.ordinalize(1234)
@@ -60,6 +83,37 @@ You can convert a number to a short ordinal:
 Strings::Numeral.ordinalize(1234, short: true)
 # => 1234th
 ```
+
+## 2. API
+
+### 2.1 numeralize
+
+### 2.2 cardinalize
+
+To express a number as a cardinal numeral use `cardinalize` or `cardinalise`.
+
+```ruby
+Strings::Numeral.cardinalize(1234)
+# => "one thousand, two hundred thirty four"
+```
+
+You're not limited to integers only. You can also express decimal numbers:
+
+```ruby
+Strings::Numeral.cardinalize(123.456)
+# => "one hundred twenty three and four hundred fifty six thousandths"
+```
+
+By default the fractional part of a decimal number is expressed as a fraction If you wish to spell out it digit by digit use `:decimal` option with `:digit` value:
+
+```ruby
+Strings::Numeral.cardinalize(123.456, decimal: :digit)
+# => "one hundred twenty three point four five six"
+```
+
+### 2.3 ordinalize
+
+## 3. Extending String class
 
 ## Development
 
