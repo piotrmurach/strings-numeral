@@ -175,7 +175,15 @@ module Strings
         num.to_s + short_ordinalize(num)
       else
         sentence = convert_numeral(num)
-        if sentence =~ /(\w+)$/
+        if sentence =~ /(\w+) and/
+          last_digits = $1
+          suffix = CARDINAL_TO_ORDINAL[last_digits]
+          if suffix
+            sentence.sub(/#{last_digits} and/, "#{suffix} and")
+          else
+            sentence
+          end
+        elsif sentence =~ /(\w+)$/
           last_digits = $1
           suffix = CARDINAL_TO_ORDINAL[last_digits]
           if suffix
