@@ -10,6 +10,7 @@ module Strings
     ZERO = "zero"
     AND = "and"
     POINT = "point"
+    SPACE = " "
 
     CARDINALS = {
       0 => "",
@@ -243,13 +244,13 @@ module Strings
       end
 
       if negative
-        sentence = NEGATIVE + " " + sentence
+        sentence = NEGATIVE + SPACE + sentence
       end
 
       if decimals
-        sentence = sentence + " " +
+        sentence = sentence + SPACE +
           (separator.nil? ? (decimal == :fraction ? AND : POINT) : separator) +
-          " " + convert_decimals(num, delimiter: delimiter, decimal: decimal)
+          SPACE + convert_decimals(num, delimiter: delimiter, decimal: decimal)
       end
 
       sentence
@@ -267,11 +268,11 @@ module Strings
       case decimal
       when :fraction
         unit = DECIMAL_SLOTS[dec_num.to_s.length - 1]
-        convert_to_words(dec_num.to_i).join(delimiter) + " " + unit
+        convert_to_words(dec_num.to_i).join(delimiter) + SPACE + unit
       when :digit
         dec_num.chars.map do |n|
           (v = convert_tens(n.to_i)).empty? ? ZERO : v
-        end.join(" ")
+        end.join(SPACE)
       else
         raise Error, "Unknown decimal option '#{decimal.inspect}'"
       end
@@ -295,7 +296,7 @@ module Strings
         word << convert_hundreds(mod)
         word << scale unless i.zero?
 
-        words.insert(0, word.join(" "))
+        words.insert(0, word.join(SPACE))
 
         n /= 1000
 
@@ -325,7 +326,7 @@ module Strings
         word << convert_tens(tens)
       end
 
-      word.join(" ")
+      word.join(SPACE)
     end
     module_function :convert_hundreds
 
@@ -345,7 +346,7 @@ module Strings
         word << CARDINALS[tens % 10]
       end
 
-      word.join(" ")
+      word.join(SPACE)
     end
     module_function :convert_tens
   end # Numeral
