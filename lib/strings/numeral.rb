@@ -6,6 +6,9 @@ module Strings
   module Numeral
     class Error < StandardError; end
 
+    NEGATIVE = "negative"
+    ZERO = "zero"
+
     CARDINALS = {
       0 => "",
       1 => "one",
@@ -224,11 +227,11 @@ module Strings
       sentence = convert_to_words(n).join("#{delimiter} ")
 
       if sentence.empty?
-        sentence = "zero"
+        sentence = ZERO
       end
 
       if negative
-        sentence = "negative " + sentence
+        sentence = NEGATIVE + " " + sentence
       end
 
       if decimals
@@ -254,7 +257,7 @@ module Strings
         convert_to_words(dec_num.to_i).join("#{delimiter} ") + " " + unit
       when :digit
         dec_num.chars.map do |n|
-          (v = convert_tens(n.to_i)).empty? ? "zero" : v
+          (v = convert_tens(n.to_i)).empty? ? ZERO : v
         end.join(" ")
       else
         raise Error, "Unknown decimal option '#{decimal.inspect}'"
