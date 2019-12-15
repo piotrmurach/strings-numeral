@@ -216,10 +216,10 @@ module Strings
     #   the number as numeral
     #
     # @api private
-    def convert_numeral(num, delimiter: ",")
+    def convert_numeral(num, delimiter: ",", decimal: :fraction)
       negative = num < 0
       n = num.to_i.abs
-      decimal = (n != num.abs)
+      decimals = (n != num.abs)
 
       sentence = convert_to_words(n).join("#{delimiter} ")
 
@@ -231,8 +231,9 @@ module Strings
         sentence = "negative " + sentence
       end
 
-      if decimal
-        sentence = sentence + " and " + convert_decimals(num)
+      if decimals
+        sentence = sentence + (decimal == :fraction ? " and " : " point ") +
+          convert_decimals(num, delimiter: delimiter, decimal: decimal)
       end
 
       sentence
@@ -244,11 +245,20 @@ module Strings
     # @return [String]
     #
     # @api private
-    def convert_decimals(num, delimiter: ",")
+    def convert_decimals(num, delimiter: ",", decimal: :fraction)
       dec_num = num.to_s.split(".")[1]
-      unit = DECIMAL_SLOTS[dec_num.to_s.length - 1]
 
-      convert_to_words(dec_num.to_i).join("#{delimiter} ") + " " + unit
+      case decimal
+      when :fraction
+        unit = DECIMAL_SLOTS[dec_num.to_s.length - 1]
+        convert_to_words(dec_num.to_i).join("#{delimiter} ") + " " + unit
+      when :digit
+        dec_num.chars.map do |n|
+          (v = convert_tens(n.to_i)).empty? ? "zero" : v
+        end.join(" ")
+      else
+        raise Error, "Unknown decimal option '#{decimal.inspect}'"
+      end
     end
     module_function :convert_decimals
 
