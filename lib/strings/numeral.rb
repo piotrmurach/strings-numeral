@@ -219,12 +219,12 @@ module Strings
     #   the number as numeral
     #
     # @api private
-    def convert_numeral(num, delimiter: ",", decimal: :fraction)
+    def convert_numeral(num, delimiter: ", ", decimal: :fraction)
       negative = num < 0
       n = num.to_i.abs
       decimals = (n != num.abs)
 
-      sentence = convert_to_words(n).join("#{delimiter} ")
+      sentence = convert_to_words(n).join(delimiter)
 
       if sentence.empty?
         sentence = ZERO
@@ -248,13 +248,13 @@ module Strings
     # @return [String]
     #
     # @api private
-    def convert_decimals(num, delimiter: ",", decimal: :fraction)
+    def convert_decimals(num, delimiter: ", ", decimal: :fraction)
       dec_num = num.to_s.split(".")[1]
 
       case decimal
       when :fraction
         unit = DECIMAL_SLOTS[dec_num.to_s.length - 1]
-        convert_to_words(dec_num.to_i).join("#{delimiter} ") + " " + unit
+        convert_to_words(dec_num.to_i).join(delimiter) + " " + unit
       when :digit
         dec_num.chars.map do |n|
           (v = convert_tens(n.to_i)).empty? ? ZERO : v

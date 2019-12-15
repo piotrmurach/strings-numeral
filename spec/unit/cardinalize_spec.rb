@@ -50,4 +50,9 @@ RSpec.describe Strings::Numeral, "#cardinalize" do
       Strings::Numeral.cardinalize(123.45, decimal: :unknown)
     }.to raise_error(Strings::Numeral::Error, "Unknown decimal option ':unknown'")
   end
+
+  it "allows to change a thousand's delimiter" do
+    expect(Strings::Numeral.cardinalize(1_234_567, delimiter: " and ")).
+      to eq("one million and two hundred thirty four thousand and five hundred sixty seven")
+  end
 end
