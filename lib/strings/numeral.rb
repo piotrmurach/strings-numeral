@@ -232,10 +232,11 @@ module Strings
     #   the number as numeral
     #
     # @api private
-    def convert_numeral(num, delimiter: ", ", decimal: :fraction, separator: nil)
-      negative = num < 0
+    def convert_numeral(num, delimiter: ", ", decimal: :fraction, separator: nil,
+                             trailing_zeros: false)
+      negative = num.to_i < 0
       n = num.to_i.abs
-      decimals = (n != num.abs)
+      decimals = (n != num.to_f.abs)
 
       sentence = convert_to_words(n).join(delimiter)
 

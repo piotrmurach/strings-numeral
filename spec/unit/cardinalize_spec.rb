@@ -22,6 +22,8 @@ RSpec.describe Strings::Numeral, "#cardinalize" do
     1.23 => "one and twenty three hundredths",
     12.003 => "twelve and three thousandths",
     0.001 => "zero and one thousandth",
+    12.100 => "twelve and one tenth",
+    12.000 => "twelve",
     123.456 => "one hundred twenty three and four hundred fifty six thousandths",
     -114.5678 => "negative one hundred fourteen and five thousand, six hundred seventy eight ten-thousandths",
     1234.567 => "one thousand, two hundred thirty four and five hundred sixty seven thousandths",
@@ -37,6 +39,8 @@ RSpec.describe Strings::Numeral, "#cardinalize" do
     0.21 => "zero point two one",
     1.23 => "one point two three",
     12.003 => "twelve point zero zero three",
+    12.100 => "twelve point one",
+    12.000 => "twelve",
     123.456 => "one hundred twenty three point four five six",
     -114.5678 => "negative one hundred fourteen point five six seven eight",
     1234.567 => "one thousand, two hundred thirty four point five six seven",
@@ -61,5 +65,9 @@ RSpec.describe Strings::Numeral, "#cardinalize" do
   it "changes a separator between fractional and integer numerals" do
     expect(Strings::Numeral.cardinalize(1_234.567, separator: "dot")).
       to eq("one thousand, two hundred thirty four dot five hundred sixty seven thousandths")
+  end
+
+  it "keeps trailing zeros for strings" do
+    expect(Strings::Numeral.cardinalize("12.100")).to eq("twelve and one hundred thousandths")
   end
 end
