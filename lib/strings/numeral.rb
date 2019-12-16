@@ -180,7 +180,7 @@ module Strings
       if options[:short]
         num.to_s + short_ordinalize(num)
       else
-        decimals = (num.to_i.abs != num.abs)
+        decimals = (num.to_i.abs != num.to_f.abs)
         sentence = convert_numeral(num, **options)
         separators = [AND, POINT, options[:separator]].compact
 

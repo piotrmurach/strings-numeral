@@ -37,6 +37,8 @@ RSpec.describe Strings::Numeral, "#ordinalize" do
     1.23 => "first and twenty three hundredths",
     12.003 => "twelfth and three thousandths",
     0.001 => "zeroth and one thousandth",
+    12.100 => "twelfth and one tenth",
+    12.000 => "twelfth",
     123.456 => "one hundred twenty third and four hundred fifty six thousandths",
     -114.5678 => "negative one hundred fourteenth and five thousand, six hundred seventy eight ten-thousandths",
     1234.567 => "one thousand, two hundred thirty fourth and five hundred sixty seven thousandths",
@@ -52,6 +54,8 @@ RSpec.describe Strings::Numeral, "#ordinalize" do
     0.21 => "zeroth point two one",
     1.23 => "first point two three",
     12.003 => "twelfth point zero zero three",
+    12.100 => "twelfth point one",
+    12.000 => "twelfth",
     123.456 => "one hundred twenty third point four five six",
     -114.5678 => "negative one hundred fourteenth point five six seven eight",
     1234.567 => "one thousand, two hundred thirty fourth point five six seven",
@@ -70,5 +74,13 @@ RSpec.describe Strings::Numeral, "#ordinalize" do
   it "changes a separator between fractional and integer numerals" do
     expect(Strings::Numeral.ordinalize(1_234.567, separator: "dot")).
       to eq("one thousand, two hundred thirty fourth dot five hundred sixty seven thousandths")
+  end
+
+  it "removes trailing zeros for strings to match number behaviour" do
+    expect(Strings::Numeral.ordinalize("12.100")).to eq("twelfth and one tenth")
+  end
+
+  it "keeps trailing zeros for strings when :trailing_zeros is set to true" do
+    expect(Strings::Numeral.ordinalize("12.100", trailing_zeros: true)).to eq("twelfth and one hundred thousandths")
   end
 end
