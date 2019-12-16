@@ -251,7 +251,8 @@ module Strings
       if decimals
         sentence = sentence + SPACE +
           (separator.nil? ? (decimal == :fraction ? AND : POINT) : separator) +
-          SPACE + convert_decimals(num, delimiter: delimiter, decimal: decimal)
+          SPACE + convert_decimals(num, delimiter: delimiter, decimal: decimal,
+                                   trailing_zeros: trailing_zeros)
       end
 
       sentence
@@ -263,8 +264,10 @@ module Strings
     # @return [String]
     #
     # @api private
-    def convert_decimals(num, delimiter: ", ", decimal: :fraction)
+    def convert_decimals(num, delimiter: ", ", decimal: :fraction,
+                              trailing_zeros: false)
       dec_num = num.to_s.split(".")[1]
+      dec_num.gsub!(/0+$/, "") unless trailing_zeros
 
       case decimal
       when :fraction
