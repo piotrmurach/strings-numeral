@@ -1,5 +1,6 @@
 # frozen_string_literal: true
 
+require_relative "numeral/configuration"
 require_relative "numeral/version"
 
 module Strings
@@ -167,6 +168,20 @@ module Strings
       instance.ordinalize_short(num, **options)
     end
 
+    # Create numeral with custom configuration
+    #
+    # @yieldparam [Configuration]
+    #
+    # @return [Numeral]
+    #
+    # @api public
+    def initialize
+      @configuration = Configuration.new
+      if block_given?
+        yield @configuration
+      end
+    end
+
     # Convert a number to a numeral
     #
     # @param [Numeric,String] num
@@ -218,7 +233,8 @@ module Strings
       else
         decimals = (num.to_i.abs != num.to_f.abs)
         sentence = convert_numeral(num, **options)
-        separators = [AND, POINT, options[:separator]].compact
+        separators = [AND, POINT,
+                      options.fetch(:separator, @configuration.separator)].compact
 
         if decimals && sentence =~ /(\w+) (#{Regexp.union(separators)})/
           last_digits = $1
@@ -278,8 +294,11 @@ module Strings
     #   the number as numeral
     #
     # @api private
-    def convert_numeral(num, delimiter: ", ", decimal: :fraction, separator: nil,
-                             trailing_zeros: false)
+    def convert_numeral(num, **options)
+      delimiter = options.fetch(:delimiter, @configuration.delimiter)
+      decimal = options.fetch(:decimal, @configuration.decimal)
+      separator = options.fetch(:separator, @configuration.separator)
+
       negative = num.to_i < 0
       n = num.to_i.abs
       decimals = (n != num.to_f.abs)
@@ -297,8 +316,7 @@ module Strings
       if decimals
         sentence = sentence + SPACE +
           (separator.nil? ? (decimal == :fraction ? AND : POINT) : separator) +
-          SPACE + convert_decimals(num, delimiter: delimiter, decimal: decimal,
-                                   trailing_zeros: trailing_zeros)
+          SPACE + convert_decimals(num, **options)
       end
 
       sentence
@@ -306,11 +324,17 @@ module Strings
 
     # Convert decimal part to words
     #
+    # @param [String] trailing_zeros
+    #   whether or not to keep trailing zeros, defaults to `false`
+    #
     # @return [String]
     #
     # @api private
-    def convert_decimals(num, delimiter: ", ", decimal: :fraction,
-                              trailing_zeros: false)
+    def convert_decimals(num, **options)
+      delimiter = options.fetch(:delimiter, @configuration.delimiter)
+      decimal = options.fetch(:decimal, @configuration.decimal)
+      trailing_zeros = options.fetch(:trailing_zeros, false)
+
       dec_num = num.to_s.split(".")[1]
       dec_num.gsub!(/0+$/, "") unless trailing_zeros
 
