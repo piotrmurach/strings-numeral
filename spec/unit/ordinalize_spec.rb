@@ -9,7 +9,8 @@ RSpec.describe Strings::Numeral, "#ordinalize" do
     123 => "123rd",
     167 => "167th",
     457 => "457th",
-    -23 => "-23rd"
+    -23 => "-23rd",
+    "125" => "125th"
   }.each do |num, word|
     it "ordinalizes #{num.inspect} to short #{word.inspect}" do
       expect(Strings::Numeral.ordinalize(num, short: true)).to eq(word)

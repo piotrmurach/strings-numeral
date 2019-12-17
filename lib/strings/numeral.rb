@@ -197,7 +197,7 @@ module Strings
     # @api public
     def ordinalize(num, **options)
       if options[:short]
-        num.to_s + short_ordinalize(num)
+        num.to_s + ordinalize_short(num)
       else
         decimals = (num.to_i.abs != num.to_f.abs)
         sentence = convert_numeral(num, **options)
@@ -227,13 +227,24 @@ module Strings
     alias :ordinalise :ordinalize
     module_function :ordinalise
 
-    def short_ordinalize(num, short: false)
-      num_abs = num.abs
+    # Convert a number to a short ordinal form
+    #
+    # @example
+    #   ordinalize_short(123) # => 123rd
+    #
+    # @param [Numeric, String] num
+    #   the number to convert
+    #
+    # @return [String]
+    #
+    # @api private
+    def ordinalize_short(num)
+      num_abs = num.to_i.abs
 
       CARDINAL_TO_SHORT_ORDINAL[num_abs % 100] ||
         CARDINAL_TO_SHORT_ORDINAL[num_abs % 10]
     end
-    module_function :short_ordinalize
+    module_function :ordinalize_short
 
     # Convert a number into a numeral
     #
