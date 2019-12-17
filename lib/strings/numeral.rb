@@ -8,6 +8,7 @@ module Strings
     class Error < StandardError; end
 
     NEGATIVE = "negative"
+    HUNDRED = "hundred"
     ZERO = "zero"
     AND = "and"
     POINT = "point"
@@ -391,7 +392,7 @@ module Strings
 
       if !hundreds.zero?
         word << convert_tens(hundreds)
-        word << "hundred"
+        word << HUNDRED
       end
 
       if !tens.zero?
