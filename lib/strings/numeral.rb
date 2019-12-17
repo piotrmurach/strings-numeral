@@ -92,6 +92,22 @@ module Strings
       "ninety" => "ninetieth"
     }.freeze
 
+    CARDINAL_TO_ROMAN = {
+      1 => "I",
+      4 => "IV",
+      5 => "V",
+      9 => "IX",
+      10 => "X",
+      40 => "XL",
+      50 => "L",
+      90 => "XC",
+      100 => "C",
+      400 => "CD",
+      500 => "D",
+      900 => "CM",
+      1000 => "M"
+    }.freeze
+
     SCALES = [
       "hundreds-tens-ones",
       "thousand",
@@ -167,6 +183,10 @@ module Strings
 
     def self.ordinalize_short(num, **options)
       instance.ordinalize_short(num, **options)
+    end
+
+    def self.romanize(num)
+      instance.romanize(num)
     end
 
     # Create numeral with custom configuration
@@ -275,6 +295,33 @@ module Strings
 
       CARDINAL_TO_SHORT_ORDINAL[num_abs % 100] ||
         CARDINAL_TO_SHORT_ORDINAL[num_abs % 10]
+    end
+
+    # Convert a number to a roman numeral
+    #
+    # @example
+    #   romanize(2020) # => "MMXX"
+    #
+    # @param [Integer] num
+    #   the number to convert
+    #
+    # @return [String]
+    #
+    # @api public
+    def romanize(num)
+      n = num.to_i
+
+      if n < 1 || n > 4999
+        raise Error, "'#{n}' is out of range"
+      end
+
+      CARDINAL_TO_ROMAN.keys.reverse_each.reduce([]) do |word, card|
+        while n >= card
+          n -= card
+          word << CARDINAL_TO_ROMAN[card]
+        end
+        word
+      end.join
     end
 
     private
