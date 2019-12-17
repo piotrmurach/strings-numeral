@@ -147,13 +147,29 @@ module Strings
       "vigintillionths"
     ].freeze
 
+    # Convert a number to a numeral
+    #
+    # @param [Numeric,String] num
+    #   the number to convert
+    #
+    # @api public
+    def numeralize(num, **options)
+      case options.delete(:term)
+      when /ord/
+        ordinalize(num, **options)
+      else
+        cardinalize(num, **options)
+      end
+    end
+    module_function :numeralize
+
     # Convert a number to a cardinal numeral
     #
     # @example
     #   cardinalize(1234)
     #   # => one thousand, two hundred thirty four
     #
-    # @param [Numeric] num
+    # @param [Numeric,String] num
     #
     # @return [String]
     #
@@ -173,7 +189,10 @@ module Strings
     #
     #   ordinalize(12, short: true) # => 12th
     #
-    # @param [Numeric]
+    # @param [Numeric,String] num
+    #   the number to convert
+    #
+    # @return [String]
     #
     # @api public
     def ordinalize(num, **options)
