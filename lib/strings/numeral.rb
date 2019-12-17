@@ -169,24 +169,30 @@ module Strings
       @instance ||= Numeral.new
     end
 
-    def self.numeralize(num, **options)
-      instance.numeralize(num, **options)
-    end
+    class << self
+      def numeralize(num, **options)
+        instance.numeralize(num, **options)
+      end
+      alias :normalise :normalize
 
-    def self.cardinalize(num, **options)
-      instance.cardinalize(num, **options)
-    end
+      def cardinalize(num, **options)
+        instance.cardinalize(num, **options)
+      end
+      alias :cardinalise :cardinalize
 
-    def self.ordinalize(num, **options)
-      instance.ordinalize(num, **options)
-    end
+      def ordinalize(num, **options)
+        instance.ordinalize(num, **options)
+      end
+      alias :ordinalise :ordinalize
 
-    def self.ordinalize_short(num, **options)
-      instance.ordinalize_short(num, **options)
-    end
+      def ordinalize_short(num, **options)
+        instance.ordinalize_short(num, **options)
+      end
 
-    def self.romanize(num)
-      instance.romanize(num)
+      def romanize(num)
+        instance.romanize(num)
+      end
+      alias :romanise :romanize
     end
 
     # Create numeral with custom configuration

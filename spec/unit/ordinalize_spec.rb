@@ -68,7 +68,7 @@ RSpec.describe Strings::Numeral, "#ordinalize" do
   end
 
   it "allows to change a thousand's delimiter" do
-    expect(Strings::Numeral.ordinalize(1_234_567, delimiter: " and ")).
+    expect(Strings::Numeral.ordinalise(1_234_567, delimiter: " and ")).
       to eq("one million and two hundred thirty four thousand and five hundred sixty seventh")
   end
 
