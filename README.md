@@ -50,15 +50,17 @@ Or install it yourself as:
   * [2.1 numeralize](#21-numeralize)
   * [2.2 cardinalize](#22-cardinalize)
   * [2.3 ordinalize](#23-ordinalize)
+  * [2.4 romanize](#24-romanize)
+  * [2.5 configuration](#25-configuration)
 * [3. Extending String class](#3-extending-string-class)
 
 ## 1. Usage
 
-**Strings::Numeral** aims to express any number as a numeral in words. To do this it provides few methods. For example, to express a number as a cardinal numeral use `cardinalize`:
+**Strings::Numeral** helps to express any number as a numeral in words. It exposes few methods to achieve this. For example, you can express a number as a cardinal numeral using `cardinalize`:
 
 ```ruby
 Strings::Numeral.cardinalize(1234)
-# => one thousand, two hundred thirty four
+# => "one thousand, two hundred thirty four"
 ```
 
 But you're not limited to converting integers only. It can handle decimals as well:
@@ -68,20 +70,27 @@ Strings::Numeral.cardinalize(1234.567)
 # => "one thousand, two hundred thirty four and five hundred sixty seven thousandths"
 ```
 
-For more options on how to customize see [configuration](#24-configuration)
+For more options on how to customize formatting see [configuration](#25-configuration) section.
 
-To convert a number to to a ordinal numeral:
+Similarly, you can convert a number to a ordinal numeral with `ordinalize`:
 
 ```ruby
 Strings::Numeral.ordinalize(1234)
-# => one thousand, two hundred thirty fourth
+# => "one thousand, two hundred thirty fourth"
 ```
 
-You can convert a number to a short ordinal:
+You can also convert a number to a short ordinal:
 
 ```ruby
 Strings::Numeral.ordinalize(1234, short: true)
-# => 1234th
+# => "1234th"
+```
+
+To turn a number into a roman numeral use `romanize`:
+
+```ruby
+Strings::Numeral.romanize(2020)
+# => "MMXX"
 ```
 
 ## 2. API
@@ -97,21 +106,107 @@ Strings::Numeral.cardinalize(1234)
 # => "one thousand, two hundred thirty four"
 ```
 
-You're not limited to integers only. You can also express decimal numbers:
+You're not limited to integers only. You can also express decimal numbers as well:
 
 ```ruby
 Strings::Numeral.cardinalize(123.456)
 # => "one hundred twenty three and four hundred fifty six thousandths"
 ```
 
-By default the fractional part of a decimal number is expressed as a fraction If you wish to spell out it digit by digit use `:decimal` option with `:digit` value:
+By default the fractional part of a decimal number is expressed as a fraction. If you wish to spell out fractional part digit by digit use `:decimal` option with `:digit` value:
 
 ```ruby
 Strings::Numeral.cardinalize(123.456, decimal: :digit)
 # => "one hundred twenty three point four five six"
 ```
 
+You may prefer to use a different delimiter for thousand's. You can do use by passing the `:delimiter` option:
+
+```ruby
+Strings::Numeral.cardinalize(1_234_567, delimiter: " and ")
+# => "one million and two hundred thirty four thousand and five hundred sixty seven"
+```
+
+To change word that splits integer from factional part use `:separator` option:
+
+```ruby
+Strings::Numeral.cardinalize(1_234.567, separator: "dot")
+# => "one thousand, two hundred thirty four dot five hundred sixty seven thousandths"
+```
+
 ### 2.3 ordinalize
+
+To express a number as a cardinal numeral use `ordinalize` or `ordinalise`.
+
+```ruby
+Strings::Numeral.ordinalize(1234)
+# => "one thousand, two hundred thirty fourth"
+```
+
+You're not limited to integers only. You can also express decimal numbers as well:
+
+```ruby
+Strings::Numeral.ordinalize(123.456)
+# => "one hundred twenty third and four hundred fifty six thousandths"
+```
+
+By default the fractional part of a decimal number is expressed as a fraction. If you wish to spell out fractional part digit by digit use `:decimal` option with `:digit` value:
+
+```ruby
+Strings::Numeral.ordinalize(123.456, decimal: :digit)
+# => "one hundred twenty third point four five six"
+```
+
+You may prefer to use a different delimiter for thousand's. You can do use by passing the `:delimiter` option:
+
+```ruby
+Strings::Numeral.ordinalize(1_234_567, delimiter: " and ")
+# => "one million and two hundred thirty four thousand and five hundred sixty seventh"
+```
+
+To change word that splits integer from factional part use `:separator` option:
+
+```ruby
+Strings::Numeral.ordinalize(1_234.567, separator: "dot")
+# => "one thousand, two hundred thirty fourth dot five hundred sixty seven thousandths"
+```
+
+### 2.4. romanize
+
+
+### 2.5 configuration
+
+All available configuration options are:
+
+* `decimal` - If `:digit` will spell out every digit in fractional part of a decimal. Defaults to `:fraction` that spells out a fraction.
+* `delimiter` - Sets the thousands delimiter. Defaults to `", "`.
+* `separator` - Set the separator between the fractional and integer numeral parts. Defaults to `"and"` for `:fraction` option and `"point"` for `:digit` option
+* `trailing_zeros` - If `true` keeps trailing zeros at the end of the fractional part. Defaults to `false`.
+
+The above options can be passed as keyword arguments:
+
+```ruby
+Strings::Numeral.cardinalize("12.100", trailing_zeros: true, decimal: :digit)
+# => "twelve point one zero zero"
+```
+
+Or you can configure the options for an instance:
+
+```ruby
+numeral = Strings::Numeral.new do |config|
+  config.delimiter "; "
+  config.separator "dot"
+  config.decimal :digit
+  config.trailing_zeros true
+end
+```
+
+Once configured, you can use the instance like so:
+
+```ruby
+numeral.cardinalize("1234.56700")
+# => "one thousand; two hundred thirty four dot five six seven zero zero"
+```
 
 ## 3. Extending String class
 
