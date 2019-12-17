@@ -173,7 +173,7 @@ module Strings
       def numeralize(num, **options)
         instance.numeralize(num, **options)
       end
-      alias :normalise :normalize
+      alias :numeralise :numeralize
 
       def cardinalize(num, **options)
         instance.cardinalize(num, **options)
