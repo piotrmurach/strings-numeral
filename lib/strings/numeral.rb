@@ -3,7 +3,7 @@
 require_relative "numeral/version"
 
 module Strings
-  module Numeral
+  class Numeral
     class Error < StandardError; end
 
     NEGATIVE = "negative"
@@ -147,6 +147,26 @@ module Strings
       "vigintillionths"
     ].freeze
 
+    def self.instance
+      @instance ||= Numeral.new
+    end
+
+    def self.numeralize(num, **options)
+      instance.numeralize(num, **options)
+    end
+
+    def self.cardinalize(num, **options)
+      instance.cardinalize(num, **options)
+    end
+
+    def self.ordinalize(num, **options)
+      instance.ordinalize(num, **options)
+    end
+
+    def self.ordinalize_short(num, **options)
+      instance.ordinalize_short(num, **options)
+    end
+
     # Convert a number to a numeral
     #
     # @param [Numeric,String] num
@@ -161,7 +181,6 @@ module Strings
         cardinalize(num, **options)
       end
     end
-    module_function :numeralize
 
     # Convert a number to a cardinal numeral
     #
@@ -177,9 +196,7 @@ module Strings
     def cardinalize(num, **options)
       convert_numeral(num, **options)
     end
-    module_function :cardinalize
     alias :cardinalise :cardinalize
-    module_function :cardinalise
 
     # Convert a number to an ordinal numeral
     #
@@ -223,9 +240,7 @@ module Strings
         end
       end
     end
-    module_function :ordinalize
     alias :ordinalise :ordinalize
-    module_function :ordinalise
 
     # Convert a number to a short ordinal form
     #
@@ -244,7 +259,8 @@ module Strings
       CARDINAL_TO_SHORT_ORDINAL[num_abs % 100] ||
         CARDINAL_TO_SHORT_ORDINAL[num_abs % 10]
     end
-    module_function :ordinalize_short
+
+    private
 
     # Convert a number into a numeral
     #
@@ -287,7 +303,6 @@ module Strings
 
       sentence
     end
-    module_function :convert_numeral
 
     # Convert decimal part to words
     #
@@ -312,7 +327,6 @@ module Strings
         raise Error, "Unknown decimal option '#{decimal.inspect}'"
       end
     end
-    module_function :convert_decimals
 
     # Convert an integer to number words
     #
@@ -340,7 +354,6 @@ module Strings
 
       words
     end
-    module_function :convert_to_words
 
     # Convert 3 digit number to equivalent word
     #
@@ -363,7 +376,6 @@ module Strings
 
       word.join(SPACE)
     end
-    module_function :convert_hundreds
 
     # Convert number in 0..99 range to equivalent word
     #
@@ -383,6 +395,5 @@ module Strings
 
       word.join(SPACE)
     end
-    module_function :convert_tens
   end # Numeral
 end # Strings
