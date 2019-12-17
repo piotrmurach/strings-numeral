@@ -10,6 +10,7 @@ module Strings
         @delimiter = ", "
         @decimal = :fraction
         @separator = nil
+        @trailing_zeros = false
       end
 
       def delimiter(value = (not_set = true))
@@ -33,6 +34,14 @@ module Strings
           @decimal
         else
           @decimal = value
+        end
+      end
+
+      def trailing_zeros(value = (not_set = true))
+        if not_set
+          @trailing_zeros
+        else
+          @trailing_zeros = value
         end
       end
     end # Configuration

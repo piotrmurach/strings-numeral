@@ -333,7 +333,7 @@ module Strings
     def convert_decimals(num, **options)
       delimiter = options.fetch(:delimiter, @configuration.delimiter)
       decimal = options.fetch(:decimal, @configuration.decimal)
-      trailing_zeros = options.fetch(:trailing_zeros, false)
+      trailing_zeros = options.fetch(:trailing_zeros, @configuration.trailing_zeros)
 
       dec_num = num.to_s.split(".")[1]
       dec_num.gsub!(/0+$/, "") unless trailing_zeros

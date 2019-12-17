@@ -6,10 +6,11 @@ RSpec.describe Strings::Numeral, "" do
       config.delimiter "; "
       config.separator "dot"
       config.decimal :digit
+      config.trailing_zeros true
     end
 
-    expect(numeral.cardinalize(1234.567)).
-      to eq("one thousand; two hundred thirty four dot five six seven")
+    expect(numeral.cardinalize("1234.56700")).
+      to eq("one thousand; two hundred thirty four dot five six seven zero zero")
   end
 
   it "configures options for an ordinal instance" do
@@ -17,9 +18,10 @@ RSpec.describe Strings::Numeral, "" do
       config.delimiter "; "
       config.separator "dot"
       config.decimal :digit
+      config.trailing_zeros true
     end
 
-    expect(numeral.ordinalize(1234.567)).
-      to eq("one thousand; two hundred thirty fourth dot five six seven")
+    expect(numeral.ordinalize("1234.56700")).
+      to eq("one thousand; two hundred thirty fourth dot five six seven zero zero")
   end
 end
