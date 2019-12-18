@@ -34,6 +34,6 @@ RSpec.describe Strings::Numeral, "configuration" do
     end
 
     expect(numeral.monetize("1234.56700")).
-      to eq("one thousand; two hundred thirty four zlotys dot five seven grosz")
+      to eq("one thousand; two hundred thirty four zlotys dot five seven groszy")
   end
 end
