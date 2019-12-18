@@ -355,7 +355,7 @@ module Strings
     # @api public
     def monetize(num, **options)
       sep = options.fetch(:separator, @configuration.separator)
-      curr_name = options.fetch(:currency, :usd)
+      curr_name = options.fetch(:currency, @configuration.currency)
       n = "%0.2f" % num.to_s
       decimals = (num.to_i.abs != num.to_f.abs)
       sentence = convert_numeral(n, **options.merge(trailing_zeros: true))

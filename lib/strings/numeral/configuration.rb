@@ -7,10 +7,19 @@ module Strings
       #
       # @api private
       def initialize
+        @currency = :usd
         @delimiter = ", "
         @decimal = :fraction
         @separator = nil
         @trailing_zeros = false
+      end
+
+      def currency(value = (not_set = true))
+        if not_set
+          @currency
+        else
+          @currency = value
+        end
       end
 
       def delimiter(value = (not_set = true))
