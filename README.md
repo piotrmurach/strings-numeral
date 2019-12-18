@@ -26,6 +26,8 @@
 
 * No monkey-patching String class
 * Functional API that can be easily wrapped by other objects
+* Instance based configuration
+* Highly performant
 
 ## Installation
 
@@ -50,8 +52,9 @@ Or install it yourself as:
   * [2.1 numeralize](#21-numeralize)
   * [2.2 cardinalize](#22-cardinalize)
   * [2.3 ordinalize](#23-ordinalize)
-  * [2.4 romanize](#24-romanize)
-  * [2.5 configuration](#25-configuration)
+  * [2.4 monetize](#24-monetize)
+  * [2.5 romanize](#25-romanize)
+  * [2.6 configuration](#26-configuration)
 * [3. Extending String class](#3-extending-string-class)
 
 ## 1. Usage
@@ -171,16 +174,39 @@ Strings::Numeral.ordinalize(1_234.567, separator: "dot")
 # => "one thousand, two hundred thirty fourth dot five hundred sixty seven thousandths"
 ```
 
-### 2.4. romanize
+### 2.4 monetize
 
+To express a number as a monetary numeral use `monetize` or `monetise`.
 
-### 2.5 configuration
+```ruby
+Strings::Numeral.monetize(123.456)
+# => "one hundred twenty three dollars and forty six cents",
+```
+
+By default `monetize` displays money using `USD` currency. You can change this with the `:currency` option that as value accepts internationally recognised symbols. Currently support currencies are: `EUR`, `GBP`, `JPY`, `PLN` and `USD`.
+
+```ruby
+Strings::Numeral.monetize(123.456, currency: :jpy)
+# => "one hundred twenty three yen and forty six sen"
+```
+
+### 2.5 romanize
+
+To convert a number into a Roman numeral use `romanize`:
+
+```ruby
+Strings::Numeral.romanize(2020)
+# => "MMXX"
+```
+
+### 2.6 configuration
 
 All available configuration options are:
 
-* `decimal` - If `:digit` will spell out every digit in fractional part of a decimal. Defaults to `:fraction` that spells out a fraction.
+* `currency` - Adds currency words for integer and fractional parts. Supports `EUR`, `GBP`, `JPY`, `PLN` and `USD`. Defaults to `USD`.
+* `decimal` - Formats fractional part of a number. The `:digit` value spells out every digit and the `:fraction` appends divider word. Defaults to `:fraction`.
 * `delimiter` - Sets the thousands delimiter. Defaults to `", "`.
-* `separator` - Set the separator between the fractional and integer numeral parts. Defaults to `"and"` for `:fraction` option and `"point"` for `:digit` option
+* `separator` - Sets the separator between the fractional and integer parts. Defaults to `"and"` for `:fraction` and `"point"` for `:digit` option.
 * `trailing_zeros` - If `true` keeps trailing zeros at the end of the fractional part. Defaults to `false`.
 
 The above options can be passed as keyword arguments:
