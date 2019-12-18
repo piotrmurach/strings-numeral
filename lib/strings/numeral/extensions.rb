@@ -16,8 +16,8 @@ module Strings
           Strings::Numeral.ordinalize(self, **options)
         end
 
-        def ordinalize_short(**options)
-          Strings::Numeral.ordinalize_short(self, **options)
+        def ordinalize_short
+          Strings::Numeral.ordinalize_short(self)
         end
 
         def monetize(**options)
