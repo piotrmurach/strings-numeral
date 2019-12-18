@@ -218,8 +218,8 @@ module Strings
       end
       alias :ordinalise :ordinalize
 
-      def ordinalize_short(num, **options)
-        instance.ordinalize_short(num, **options)
+      def ordinalize_short(num)
+        instance.ordinalize_short(num)
       end
 
       def monetize(num, **options)
@@ -294,7 +294,7 @@ module Strings
     # @api public
     def ordinalize(num, **options)
       if options[:short]
-        num.to_s + ordinalize_short(num)
+        ordinalize_short(num)
       else
         decimals = (num.to_i.abs != num.to_f.abs)
         sentence = convert_numeral(num, **options)
@@ -337,8 +337,8 @@ module Strings
     def ordinalize_short(num)
       num_abs = num.to_i.abs
 
-      CARDINAL_TO_SHORT_ORDINAL[num_abs % 100] ||
-        CARDINAL_TO_SHORT_ORDINAL[num_abs % 10]
+      num.to_i.to_s + (CARDINAL_TO_SHORT_ORDINAL[num_abs % 100] ||
+        CARDINAL_TO_SHORT_ORDINAL[num_abs % 10])
     end
 
     # Convert a number into a monetary numeral
