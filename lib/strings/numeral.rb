@@ -468,7 +468,7 @@ module Strings
         word << CARDINALS[tens]
       else
         word << CARDINALS[(tens / 10) * 10]
-        word << CARDINALS[tens % 10]
+        word << CARDINALS[tens % 10] unless (tens % 10).zero?
       end
 
       word.join(SPACE)

@@ -75,6 +75,10 @@ RSpec.describe Strings::Numeral, "#cardinalize" do
     expect(Strings::Numeral.cardinalize("12.100", trailing_zeros: true)).to eq("twelve and one hundred thousandths")
   end
 
+  it "keeps trailing zeros for strings with only one zero" do
+    expect(Strings::Numeral.cardinalize("12.70", trailing_zeros: true)).to eq("twelve and seventy hundredths")
+  end
+
   it "keeps trailing zeros when decimal format is digit" do
     expect(Strings::Numeral.cardinalize("12.100", trailing_zeros: true, decimal: :digit)).to eq("twelve point one zero zero")
   end
