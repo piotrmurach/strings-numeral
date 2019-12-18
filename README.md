@@ -55,7 +55,7 @@ Or install it yourself as:
   * [2.4 monetize](#24-monetize)
   * [2.5 romanize](#25-romanize)
   * [2.6 configuration](#26-configuration)
-* [3. Extending String class](#3-extending-string-class)
+* [3. Extending core classes](#3-extending-core-classes)
 
 ## 1. Usage
 
@@ -234,7 +234,54 @@ numeral.cardinalize("1234.56700")
 # => "one thousand; two hundred thirty four dot five six seven zero zero"
 ```
 
-## 3. Extending String class
+## 3. Extending Core Classes
+
+Though it is highly discouraged to pollute core Ruby classes, you can add the required methods to `String`, `Float` and `Integer` classes using refinements.
+
+For example, if you wish to only extend `Float` class with `cardinalize` method do:
+
+```ruby
+module MyFloatExt
+  refine Float do
+    def cardinalize(**options)
+      Strings::Numeral.cardinalize(self, **options)
+    end
+  end
+end
+```
+
+Then `cardinalize` method will be available for any float number where refinement is applied:
+
+```ruby
+using MyFloatExt
+
+12.34.cardinalize
+# => "twelve and thirty four"
+```
+
+However, if you want to include all the **Strings::Numeral** methods in `Float`, `Integer` and `String` classes, you can use provided extensions file:
+
+
+```ruby
+require "strings/numeral/extensions"
+
+using Strings::Numeral::Extensions
+```
+
+Alternatively, you can choose what class you wish to refine with all the methods:
+
+```ruby
+require "bigdecimal"
+require "strings/numeral/extensions"
+
+module MyBigDecimalExt
+  refine BigDecimal do
+    include Strings::Numeral::Extensions::Methods
+  end
+end
+
+using MyBigDecimalExt
+```
 
 ## Development
 
