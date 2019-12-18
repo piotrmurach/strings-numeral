@@ -24,8 +24,8 @@ module Strings
           Strings::Numeral.monetize(self, **options)
         end
 
-        def romanize(**options)
-          Strings::Numeral.romanize(self, **options)
+        def romanize
+          Strings::Numeral.romanize(self)
         end
       end
 
