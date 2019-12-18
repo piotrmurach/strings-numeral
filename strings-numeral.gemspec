@@ -7,8 +7,8 @@ Gem::Specification.new do |spec|
   spec.version       = Strings::Numeral::VERSION
   spec.authors       = ["Piotr Murach"]
   spec.email         = ["me@piotrmurach.com"]
-  spec.summary       = %q{Express numbers as string numerals}
-  spec.description   = %q{Express numbers as string numerals}
+  spec.summary       = %q{Express numbers as word numerals}
+  spec.description   = %q{Express numbers as word numerals like cardinal, ordinal, roman and monetary}
   spec.homepage      = "https://github.com/piotrmurach/strings-numeral"
   spec.license       = "MIT"
 
