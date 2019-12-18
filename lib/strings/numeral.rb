@@ -165,6 +165,39 @@ module Strings
       "vigintillionths"
     ].freeze
 
+    CURRENCIES = {
+      eur: {
+        unit: "euro",
+        units: "euros",
+        decimal_unit: "cent",
+        decimal_units: "cents"
+      },
+      gbp: {
+        unit: "pound",
+        units: "pounds",
+        decimal_unit: "pence",
+        decimal_units: "pence",
+      },
+      jpy: {
+        unit: "yen",
+        units: "yen",
+        decimal_unit: "sen",
+        decimal_units: "sen",
+      },
+      pln: {
+        unit: "zloty",
+        units: "zlotys",
+        decimal_unit: "grosz",
+        decimal_units: "grosz"
+      },
+      usd: {
+        unit: "dollar",
+        units: "dollars",
+        decimal_unit: "cent",
+        decimal_units: "cents"
+      }
+    }.freeze
+
     def self.instance
       @instance ||= Numeral.new
     end
@@ -188,6 +221,11 @@ module Strings
       def ordinalize_short(num, **options)
         instance.ordinalize_short(num, **options)
       end
+
+      def monetize(num, **options)
+        instance.monetize(num, **options)
+      end
+      alias :monetise :monetize
 
       def romanize(num)
         instance.romanize(num)
@@ -302,6 +340,48 @@ module Strings
       CARDINAL_TO_SHORT_ORDINAL[num_abs % 100] ||
         CARDINAL_TO_SHORT_ORDINAL[num_abs % 10]
     end
+
+    # Convert a number into a monetary numeral
+    #
+    # @example
+    #   monetize(123.45)
+    #   # => "one hundred twenty three dollars and forty five cents"
+    #
+    # @param [Numeric,String] num
+    #   the number to convert
+    #
+    # @return [String]
+    #
+    # @api public
+    def monetize(num, **options)
+      sep = options.fetch(:separator, @configuration.separator)
+      curr_name = options.fetch(:currency, :usd)
+      n = "%0.2f" % num.to_s
+      decimals = (num.to_i.abs != num.to_f.abs)
+      sentence = convert_numeral(n, **options.merge(trailing_zeros: true))
+      dec_num = n.split(".")[1]
+      curr = CURRENCIES[curr_name.to_s.downcase.to_sym]
+      separators = [AND, POINT, sep].compact
+
+      if decimals
+        regex = /(\w+) (#{Regexp.union(separators)})/
+        sentence.sub!(regex, "\\1 #{curr[:units]} \\2")
+      else
+        sentence += SPACE + (num.to_i == 1 ? curr[:unit] : curr[:units])
+      end
+
+      if decimals
+        slots = Regexp.union(DECIMAL_SLOTS.map { |slot| slot.chomp('s') })
+        regex = /(#{slots})s?/i
+        suffix = dec_num.to_i == 1 ? curr[:decimal_unit] : curr[:decimal_units]
+        if sentence.sub!(regex, suffix).nil?
+          sentence += SPACE + suffix
+        end
+      end
+
+      sentence
+    end
+    alias :monetise :monetize
 
     # Convert a number to a roman numeral
     #
