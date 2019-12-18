@@ -1,6 +1,6 @@
 # Change log
 
-## [v0.1.0] - 2019-12-xx
+## [v0.1.0] - 2019-12-18
 
 * Initial implementation and release
 
