@@ -89,6 +89,13 @@ Strings::Numeral.ordinalize(1234, short: true)
 # => "1234th"
 ```
 
+Using `monetize` you can convert any number into a monetary numeral:
+
+```ruby
+Strings::Numeral.monetize(1234.567)
+# => "one thousand, two hundred thirty four dollars and fifty seven cents",
+```
+
 To turn a number into a roman numeral use `romanize`:
 
 ```ruby
@@ -99,6 +106,20 @@ Strings::Numeral.romanize(2020)
 ## 2. API
 
 ### 2.1 numeralize
+
+The `normalize` is a wrapping method for the [cardinalize](#22-cardinalize) and [ordinalize](#23-ordinalize) methods. By default it converts a number to cardinal numeral:
+
+```ruby
+Strings::Numeral.numeralize(1234.567)
+# => "one thousand, two hundred thirty four and five hundred sixty seven thousandths"
+```
+
+You can also make it convert to ordinal numerals using `:term` option:
+
+```ruby
+Strings::Numeral.numeralize(1234.567, term: :ord)
+# => "one thousand, two hundred thirty fourth and five hundred sixty seven thousandths"
+```
 
 ### 2.2 cardinalize
 
