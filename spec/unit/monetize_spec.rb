@@ -45,6 +45,6 @@ RSpec.describe Strings::Numeral, "#monetize" do
 
   it "monetizes 123.45 in PLN " do
     expect(Strings::Numeral.monetize(123.456, currency: :pln)).
-      to eq("one hundred twenty three zlotys and forty six grosz")
+      to eq("one hundred twenty three zlotys and forty six groszy")
   end
 end

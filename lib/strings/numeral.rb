@@ -188,7 +188,7 @@ module Strings
         unit: "zloty",
         units: "zlotys",
         decimal_unit: "grosz",
-        decimal_units: "grosz"
+        decimal_units: "groszy"
       },
       usd: {
         unit: "dollar",
