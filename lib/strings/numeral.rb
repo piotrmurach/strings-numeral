@@ -1,5 +1,7 @@
 # frozen_string_literal: true
 
+require "forwardable"
+
 require_relative "numeral/configuration"
 require_relative "numeral/version"
 
@@ -203,34 +205,11 @@ module Strings
     end
 
     class << self
-      def numeralize(num, **options)
-        instance.numeralize(num, **options)
-      end
-      alias :numeralise :numeralize
+      extend Forwardable
 
-      def cardinalize(num, **options)
-        instance.cardinalize(num, **options)
-      end
-      alias :cardinalise :cardinalize
-
-      def ordinalize(num, **options)
-        instance.ordinalize(num, **options)
-      end
-      alias :ordinalise :ordinalize
-
-      def ordinalize_short(num)
-        instance.ordinalize_short(num)
-      end
-
-      def monetize(num, **options)
-        instance.monetize(num, **options)
-      end
-      alias :monetise :monetize
-
-      def romanize(num)
-        instance.romanize(num)
-      end
-      alias :romanise :romanize
+      delegate %i[numeralize cardinalize cardinalise ordinalize
+                  ordinalise ordinalize_short monetize monetise
+                  romanize romanise] => :instance
     end
 
     # Create numeral with custom configuration
