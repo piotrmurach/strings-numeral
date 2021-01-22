@@ -5,14 +5,14 @@
 # Strings::Numeral
 
 [![Gem Version](https://badge.fury.io/rb/strings-numeral.svg)][gem]
-[![Build Status](https://secure.travis-ci.org/piotrmurach/strings-numeral.svg?branch=master)][travis]
+[![Actions CI](https://github.com/piotrmurach/strings-numeral/workflows/CI/badge.svg?branch=master)][gh_actions_ci]
 [![Build status](https://ci.appveyor.com/api/projects/status/494htkcankqegwtg?svg=true)][appveyor]
 [![Maintainability](https://api.codeclimate.com/v1/badges/de0c5ad1cba6715b7135/maintainability)][codeclimate]
 [![Coverage Status](https://coveralls.io/repos/github/piotrmurach/strings-numeral/badge.svg?branch=master)][coverage]
 [![Inline docs](http://inch-ci.org/github/piotrmurach/strings-numeral.svg?branch=master)][inchpages]
 
 [gem]: http://badge.fury.io/rb/strings-numeral
-[travis]: http://travis-ci.org/piotrmurach/strings-numeral
+[gh_actions_ci]: https://github.com/piotrmurach/strings-numeral/actions?query=workflow%3ACI
 [appveyor]: https://ci.appveyor.com/project/piotrmurach/strings-numeral
 [codeclimate]: https://codeclimate.com/github/piotrmurach/strings-numeral/maintainability
 [coverage]: https://coveralls.io/github/piotrmurach/strings-numeral?branch=master
