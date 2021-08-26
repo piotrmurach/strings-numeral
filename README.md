@@ -9,14 +9,14 @@
 [![Build status](https://ci.appveyor.com/api/projects/status/494htkcankqegwtg?svg=true)][appveyor]
 [![Maintainability](https://api.codeclimate.com/v1/badges/de0c5ad1cba6715b7135/maintainability)][codeclimate]
 [![Coverage Status](https://coveralls.io/repos/github/piotrmurach/strings-numeral/badge.svg?branch=master)][coverage]
-[![Inline docs](http://inch-ci.org/github/piotrmurach/strings-numeral.svg?branch=master)][inchpages]
+[![Inline docs](https://inch-ci.org/github/piotrmurach/strings-numeral.svg?branch=master)][inchpages]
 
-[gem]: http://badge.fury.io/rb/strings-numeral
+[gem]: https://badge.fury.io/rb/strings-numeral
 [gh_actions_ci]: https://github.com/piotrmurach/strings-numeral/actions?query=workflow%3ACI
 [appveyor]: https://ci.appveyor.com/project/piotrmurach/strings-numeral
 [codeclimate]: https://codeclimate.com/github/piotrmurach/strings-numeral/maintainability
 [coverage]: https://coveralls.io/github/piotrmurach/strings-numeral?branch=master
-[inchpages]: http://inch-ci.org/github/piotrmurach/strings-numeral
+[inchpages]: https://inch-ci.org/github/piotrmurach/strings-numeral
 
 > Express numbers as string numerals.
 
@@ -312,7 +312,7 @@ To install this gem onto your local machine, run `bundle exec rake install`. To 
 
 ## Contributing
 
-Bug reports and pull requests are welcome on GitHub at https://github.com/piotrmurach/strings-numeral. This project is intended to be a safe, welcoming space for collaboration, and contributors are expected to adhere to the [Contributor Covenant](http://contributor-covenant.org) code of conduct.
+Bug reports and pull requests are welcome on GitHub at https://github.com/piotrmurach/strings-numeral. This project is intended to be a safe, welcoming space for collaboration, and contributors are expected to adhere to the [code of conduct](https://github.com/piotrmurach/strings-numeral/blob/master/CODE_OF_CONDUCT.md).
 
 ## License
 
