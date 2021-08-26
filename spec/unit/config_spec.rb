@@ -9,8 +9,8 @@ RSpec.describe Strings::Numeral, "configuration" do
       config.trailing_zeros true
     end
 
-    expect(numeral.cardinalize("1234.56700")).
-      to eq("one thousand; two hundred thirty four dot five six seven zero zero")
+    expect(numeral.cardinalize("1234.56700"))
+      .to eq("one thousand; two hundred thirty four dot five six seven zero zero")
   end
 
   it "configures options for an ordinal instance" do
@@ -21,8 +21,8 @@ RSpec.describe Strings::Numeral, "configuration" do
       config.trailing_zeros true
     end
 
-    expect(numeral.ordinalize("1234.56700")).
-      to eq("one thousand; two hundred thirty fourth dot five six seven zero zero")
+    expect(numeral.ordinalize("1234.56700"))
+      .to eq("one thousand; two hundred thirty fourth dot five six seven zero zero")
   end
 
   it "configures options for monetization" do
@@ -33,7 +33,7 @@ RSpec.describe Strings::Numeral, "configuration" do
       config.currency :pln
     end
 
-    expect(numeral.monetize("1234.56700")).
-      to eq("one thousand; two hundred thirty four zlotys dot five seven groszy")
+    expect(numeral.monetize("1234.56700"))
+      .to eq("one thousand; two hundred thirty four zlotys dot five seven groszy")
   end
 end

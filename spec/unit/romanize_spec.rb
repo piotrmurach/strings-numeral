@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 RSpec.describe Strings::Numeral, "#romanize" do
-  { 
+  {
     1 => "I",
     5 => "V",
     9 => "IX",
@@ -11,7 +11,7 @@ RSpec.describe Strings::Numeral, "#romanize" do
     1111 => "MCXI",
     2020 => "MMXX",
     "3456" => "MMMCDLVI",
-    4999 => "MMMMCMXCIX",
+    4999 => "MMMMCMXCIX"
   }.each do |num, word|
     it "romanizes #{num.inspect} to #{word.inspect}" do
       expect(Strings::Numeral.romanize(num)).to eq(word)

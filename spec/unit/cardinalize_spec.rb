@@ -58,13 +58,13 @@ RSpec.describe Strings::Numeral, "#cardinalize" do
   end
 
   it "allows to change a thousand's delimiter" do
-    expect(Strings::Numeral.cardinalise(1_234_567, delimiter: " and ")).
-      to eq("one million and two hundred thirty four thousand and five hundred sixty seven")
+    expect(Strings::Numeral.cardinalise(1_234_567, delimiter: " and "))
+      .to eq("one million and two hundred thirty four thousand and five hundred sixty seven")
   end
 
   it "changes a separator between fractional and integer numerals" do
-    expect(Strings::Numeral.cardinalize(1_234.567, separator: "dot")).
-      to eq("one thousand, two hundred thirty four dot five hundred sixty seven thousandths")
+    expect(Strings::Numeral.cardinalize(1_234.567, separator: "dot"))
+      .to eq("one thousand, two hundred thirty four dot five hundred sixty seven thousandths")
   end
 
   it "removes trailing zeros for strings to match number behaviour" do
@@ -72,14 +72,17 @@ RSpec.describe Strings::Numeral, "#cardinalize" do
   end
 
   it "keeps trailing zeros for strings when :trailing_zeros is set to true" do
-    expect(Strings::Numeral.cardinalize("12.100", trailing_zeros: true)).to eq("twelve and one hundred thousandths")
+    expect(Strings::Numeral.cardinalize("12.100", trailing_zeros: true))
+      .to eq("twelve and one hundred thousandths")
   end
 
   it "keeps trailing zeros for strings with only one zero" do
-    expect(Strings::Numeral.cardinalize("12.70", trailing_zeros: true)).to eq("twelve and seventy hundredths")
+    expect(Strings::Numeral.cardinalize("12.70", trailing_zeros: true))
+      .to eq("twelve and seventy hundredths")
   end
 
   it "keeps trailing zeros when decimal format is digit" do
-    expect(Strings::Numeral.cardinalize("12.100", trailing_zeros: true, decimal: :digit)).to eq("twelve point one zero zero")
+    expect(Strings::Numeral.cardinalize("12.100", trailing_zeros: true, decimal: :digit))
+      .to eq("twelve point one zero zero")
   end
 end

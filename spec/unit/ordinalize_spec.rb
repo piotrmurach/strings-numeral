@@ -69,13 +69,13 @@ RSpec.describe Strings::Numeral, "#ordinalize" do
   end
 
   it "allows to change a thousand's delimiter" do
-    expect(Strings::Numeral.ordinalise(1_234_567, delimiter: " and ")).
-      to eq("one million and two hundred thirty four thousand and five hundred sixty seventh")
+    expect(Strings::Numeral.ordinalise(1_234_567, delimiter: " and "))
+      .to eq("one million and two hundred thirty four thousand and five hundred sixty seventh")
   end
 
   it "changes a separator between fractional and integer numerals" do
-    expect(Strings::Numeral.ordinalize(1_234.567, separator: "dot")).
-      to eq("one thousand, two hundred thirty fourth dot five hundred sixty seven thousandths")
+    expect(Strings::Numeral.ordinalize(1_234.567, separator: "dot"))
+      .to eq("one thousand, two hundred thirty fourth dot five hundred sixty seven thousandths")
   end
 
   it "removes trailing zeros for strings to match number behaviour" do
@@ -83,6 +83,7 @@ RSpec.describe Strings::Numeral, "#ordinalize" do
   end
 
   it "keeps trailing zeros for strings when :trailing_zeros is set to true" do
-    expect(Strings::Numeral.ordinalize("12.100", trailing_zeros: true)).to eq("twelfth and one hundred thousandths")
+    expect(Strings::Numeral.ordinalize("12.100", trailing_zeros: true))
+      .to eq("twelfth and one hundred thousandths")
   end
 end

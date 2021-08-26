@@ -29,22 +29,22 @@ RSpec.describe Strings::Numeral, "#monetize" do
   end
 
   it "monetizes 123.45 in EUR " do
-    expect(Strings::Numeral.monetize(123.456, currency: :eur)).
-      to eq("one hundred twenty three euros and forty six cents")
+    expect(Strings::Numeral.monetize(123.456, currency: :eur))
+      .to eq("one hundred twenty three euros and forty six cents")
   end
 
   it "monetizes 123.45 in GBP " do
-    expect(Strings::Numeral.monetize(123.456, currency: :gbp)).
-      to eq("one hundred twenty three pounds and forty six pence")
+    expect(Strings::Numeral.monetize(123.456, currency: :gbp))
+      .to eq("one hundred twenty three pounds and forty six pence")
   end
 
   it "monetizes 123.45 in JPY " do
-    expect(Strings::Numeral.monetize(123.456, currency: :jpy)).
-      to eq("one hundred twenty three yen and forty six sen")
+    expect(Strings::Numeral.monetize(123.456, currency: :jpy))
+      .to eq("one hundred twenty three yen and forty six sen")
   end
 
   it "monetizes 123.45 in PLN " do
-    expect(Strings::Numeral.monetize(123.456, currency: :pln)).
-      to eq("one hundred twenty three zlotys and forty six groszy")
+    expect(Strings::Numeral.monetize(123.456, currency: :pln))
+      .to eq("one hundred twenty three zlotys and forty six groszy")
   end
 end
