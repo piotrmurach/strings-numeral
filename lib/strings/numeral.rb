@@ -44,7 +44,7 @@ module Strings
       60 => "sixty",
       70 => "seventy",
       80 => "eighty",
-      90 => "ninety",
+      90 => "ninety"
     }.freeze
 
     CARDINAL_TO_SHORT_ORDINAL = {
@@ -80,12 +80,12 @@ module Strings
       "thirteen" => "thirteenth",
       "fourteen" => "fourteenth",
       "fifteen" => "fifteenth",
-      "sixteen" =>  "sixteenth",
-      "seventeen" =>  "seventeenth",
-      "eighteen" =>  "eighteenth",
-      "nineteen" =>  "nineteenth",
-      "twenty" =>  "twentieth",
-      "thirty" =>  "thirtieth",
+      "sixteen" => "sixteenth",
+      "seventeen" => "seventeenth",
+      "eighteen" => "eighteenth",
+      "nineteen" => "nineteenth",
+      "twenty" => "twentieth",
+      "thirty" => "thirtieth",
       "forty" => "fortieth",
       "fifty" => "fiftieth",
       "sixty" => "sixtieth",
@@ -178,13 +178,13 @@ module Strings
         unit: "pound",
         units: "pounds",
         decimal_unit: "pence",
-        decimal_units: "pence",
+        decimal_units: "pence"
       },
       jpy: {
         unit: "yen",
         units: "yen",
         decimal_unit: "sen",
-        decimal_units: "sen",
+        decimal_units: "sen"
       },
       pln: {
         unit: "zloty",
@@ -255,7 +255,7 @@ module Strings
     def cardinalize(num, **options)
       convert_numeral(num, **options)
     end
-    alias :cardinalise :cardinalize
+    alias cardinalise cardinalize
 
     # Convert a number to an ordinal numeral
     #
@@ -300,7 +300,7 @@ module Strings
         end
       end
     end
-    alias :ordinalise :ordinalize
+    alias ordinalise ordinalize
 
     # Convert a number to a short ordinal form
     #
@@ -335,7 +335,7 @@ module Strings
     def monetize(num, **options)
       sep = options.fetch(:separator, @configuration.separator)
       curr_name = options.fetch(:currency, @configuration.currency)
-      n = "%0.2f" % num.to_s
+      n = format("%0.2f", num.to_s)
       decimals = (num.to_i.abs != num.to_f.abs)
       sentence = convert_numeral(n, **options.merge(trailing_zeros: true))
       dec_num = n.split(".")[1]
@@ -350,7 +350,7 @@ module Strings
       end
 
       if decimals
-        slots = Regexp.union(DECIMAL_SLOTS.map { |slot| slot.chomp('s') })
+        slots = Regexp.union(DECIMAL_SLOTS.map { |slot| slot.chomp("s") })
         regex = /(#{slots})s?/i
         suffix = dec_num.to_i == 1 ? curr[:decimal_unit] : curr[:decimal_units]
         if sentence.sub!(regex, suffix).nil?
@@ -360,7 +360,7 @@ module Strings
 
       sentence
     end
-    alias :monetise :monetize
+    alias monetise monetize
 
     # Convert a number to a roman numeral
     #
@@ -427,9 +427,8 @@ module Strings
       end
 
       if decimals
-        sentence = sentence + SPACE +
-          (separator.nil? ? (decimal == :fraction ? AND : POINT) : separator) +
-          SPACE + convert_decimals(num, **options)
+        sep = separator.nil? ? (decimal == :fraction ? AND : POINT) : separator
+        sentence += SPACE + sep + SPACE + convert_decimals(num, **options)
       end
 
       sentence
