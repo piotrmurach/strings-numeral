@@ -214,15 +214,43 @@ module Strings
 
     # Create numeral with custom configuration
     #
-    # @yieldparam [Configuration]
-    #
     # @return [Numeral]
     #
     # @api public
-    def initialize
-      @configuration = Configuration.new
+    def initialize(**options)
+      configuration.update(**options)
+    end
+
+    # Access configuration
+    #
+    # @api public
+    def configuration
+      @configuration ||= Configuration.new
+    end
+
+    # Configure numerals settings
+    #
+    # @example
+    #   numeral = Strings::Numeral.new
+    #   numeral.configure do |config|
+    #     config.decimal :digit
+    #     config.delimiter "; "
+    #     config.separator "dot"
+    #     config.trailing_zeros true
+    #   end
+    #
+    # @example
+    #   numeral = Strings::Numeral.new
+    #   numeral.configure decimal: :digit, separator: "dot"
+    #
+    # @yieldparam [Configuration]
+    #
+    # @api public
+    def configure(**options)
       if block_given?
-        yield @configuration
+        yield configuration
+      else
+        configuration.update(**options)
       end
     end
 

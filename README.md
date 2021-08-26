@@ -222,7 +222,7 @@ Strings::Numeral.romanize(2020)
 
 ### 2.6 configuration
 
-All available configuration options are:
+All available configuration settings are:
 
 * `currency` - Adds currency words for integer and fractional parts. Supports `EUR`, `GBP`, `JPY`, `PLN` and `USD`. Defaults to `USD`.
 * `decimal` - Formats fractional part of a number. The `:digit` value spells out every digit and the `:fraction` appends divider word. Defaults to `:fraction`.
@@ -230,17 +230,23 @@ All available configuration options are:
 * `separator` - Sets the separator between the fractional and integer parts. Defaults to `"and"` for `:fraction` and `"point"` for `:digit` option.
 * `trailing_zeros` - If `true` keeps trailing zeros at the end of the fractional part. Defaults to `false`.
 
-The above options can be passed as keyword arguments:
+The above settings can be passed as keyword arguments:
 
 ```ruby
 Strings::Numeral.cardinalize("12.100", trailing_zeros: true, decimal: :digit)
 # => "twelve point one zero zero"
 ```
 
-Or you can configure the options for an instance:
+Or you can configure the settings for an instance during initialisation:
 
 ```ruby
-numeral = Strings::Numeral.new do |config|
+numeral = Strings::Numeral.new(delimiter: "; ", separator: "dot")
+```
+
+After initialisation, you can use `configure` to change settings inside a block:
+
+```ruby
+numeral.configure do |config|
   config.delimiter "; "
   config.separator "dot"
   config.decimal :digit
