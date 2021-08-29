@@ -11,6 +11,7 @@ module Strings
         @delimiter = ", "
         @decimal = :fraction
         @separator = nil
+        @strict = false
         @trailing_zeros = false
       end
 
@@ -18,12 +19,13 @@ module Strings
       #
       # @api public
       def update(currency: nil, delimiter: nil, separator: nil, decimal: nil,
-                 trailing_zeros: nil)
+                 trailing_zeros: nil, strict: nil)
         @currency = currency if currency
         @delimiter = delimiter if delimiter
         @separator = separator if separator
         @decimal = decimal if decimal
         @trailing_zeros = trailing_zeros if trailing_zeros
+        @strict = strict if strict
       end
 
       # The currency words to use when converting
@@ -118,6 +120,25 @@ module Strings
           @trailing_zeros
         else
           @trailing_zeros = value
+        end
+      end
+
+      # Whether or not to check input parameter is a number
+      #
+      # @example
+      #   numeral = Strings::Numeral.new
+      #   numeral.configure do |config|
+      #     config.strict true
+      #   end
+      #
+      # @param [Boolean] value
+      #
+      # @api public
+      def strict(value = (not_set = true))
+        if not_set
+          @strict
+        else
+          @strict = value
         end
       end
     end # Configuration

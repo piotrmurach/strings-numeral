@@ -8,6 +8,7 @@ RSpec.describe Strings::Numeral, "configuration" do
     expect(numeral.configuration.decimal).to eq(:fraction)
     expect(numeral.configuration.delimiter).to eq(", ")
     expect(numeral.configuration.separator).to eq(nil)
+    expect(numeral.configuration.strict).to eq(false)
     expect(numeral.configuration.trailing_zeros).to eq(false)
   end
 
@@ -17,6 +18,7 @@ RSpec.describe Strings::Numeral, "configuration" do
       decimal: :digit,
       delimiter: "; ",
       separator: "dot",
+      strict: true,
       trailing_zeros: true
     )
 
@@ -24,6 +26,7 @@ RSpec.describe Strings::Numeral, "configuration" do
     expect(numeral.configuration.decimal).to eq(:digit)
     expect(numeral.configuration.delimiter).to eq("; ")
     expect(numeral.configuration.separator).to eq("dot")
+    expect(numeral.configuration.strict).to eq(true)
     expect(numeral.configuration.trailing_zeros).to eq(true)
 
     expect(numeral.monetize("1234.56700"))
@@ -34,12 +37,13 @@ RSpec.describe Strings::Numeral, "configuration" do
     numeral = Strings::Numeral.new
 
     numeral.configure(currency: "PLN", decimal: :digit, delimiter: "; ",
-                      separator: "dot", trailing_zeros: true)
+                      separator: "dot", strict: true, trailing_zeros: true)
 
     expect(numeral.configuration.currency).to eq("PLN")
     expect(numeral.configuration.decimal).to eq(:digit)
     expect(numeral.configuration.delimiter).to eq("; ")
     expect(numeral.configuration.separator).to eq("dot")
+    expect(numeral.configuration.strict).to eq(true)
     expect(numeral.configuration.trailing_zeros).to eq(true)
 
     expect(numeral.monetize("1234.56700"))
@@ -53,12 +57,14 @@ RSpec.describe Strings::Numeral, "configuration" do
       config.decimal :digit
       config.delimiter "; "
       config.separator "dot"
+      config.strict true
       config.trailing_zeros true
     end
 
     expect(numeral.configuration.decimal).to eq(:digit)
     expect(numeral.configuration.delimiter).to eq("; ")
     expect(numeral.configuration.separator).to eq("dot")
+    expect(numeral.configuration.strict).to eq(true)
     expect(numeral.configuration.trailing_zeros).to eq(true)
 
     expect(numeral.cardinalize("1234.56700"))

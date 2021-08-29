@@ -228,6 +228,7 @@ All available configuration settings are:
 * `decimal` - Formats fractional part of a number. The `:digit` value spells out every digit and the `:fraction` appends divider word. Defaults to `:fraction`.
 * `delimiter` - Sets the thousands delimiter. Defaults to `", "`.
 * `separator` - Sets the separator between the fractional and integer parts. Defaults to `"and"` for `:fraction` and `"point"` for `:digit` option.
+* `strict` - Enables number validation for the input parameter. Defaults to `false`.
 * `trailing_zeros` - If `true` keeps trailing zeros at the end of the fractional part. Defaults to `false`.
 
 The above settings can be passed as keyword arguments:

@@ -4,6 +4,7 @@
 
 ### Added
 * Add the ability to configure settings after initialisation
+* Add strict mode setting for enabling number validation of input parameter
 
 ### Changed
 * Change to use forwardable to delegate methods
