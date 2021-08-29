@@ -7,6 +7,7 @@
 
 ### Changed
 * Change to use forwardable to delegate methods
+* Change extensions to require core library when loaded
 
 ## [v0.1.0] - 2019-12-18
 

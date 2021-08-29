@@ -1,5 +1,7 @@
 # frozen_string_literal: true
 
+require_relative "../numeral" unless defined?(Strings::Numeral)
+
 module Strings
   class Numeral
     module Extensions
