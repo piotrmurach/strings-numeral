@@ -47,4 +47,10 @@ RSpec.describe Strings::Numeral, "#monetize" do
     expect(Strings::Numeral.monetize(123.456, currency: :pln))
       .to eq("one hundred twenty three zlotys and forty six groszy")
   end
+
+  it "checks value in strict mode as not a number" do
+    expect {
+      Strings::Numeral.monetize("unknown", strict: true)
+    }.to raise_error(Strings::Numeral::Error, "not a number: \"unknown\"")
+  end
 end

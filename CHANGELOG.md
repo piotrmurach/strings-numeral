@@ -9,6 +9,7 @@
 ### Changed
 * Change to use forwardable to delegate methods
 * Change extensions to require core library when loaded
+* Change conversion methods to accept only numbers in strict mode
 
 ## [v0.1.0] - 2019-12-18
 

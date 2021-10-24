@@ -85,4 +85,10 @@ RSpec.describe Strings::Numeral, "#cardinalize" do
     expect(Strings::Numeral.cardinalize("12.100", trailing_zeros: true, decimal: :digit))
       .to eq("twelve point one zero zero")
   end
+
+  it "checks value in strict mode as not a number" do
+    expect {
+      Strings::Numeral.cardinalize("unknown", strict: true)
+    }.to raise_error(Strings::Numeral::Error, "not a number: \"unknown\"")
+  end
 end

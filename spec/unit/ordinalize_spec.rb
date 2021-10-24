@@ -86,4 +86,10 @@ RSpec.describe Strings::Numeral, "#ordinalize" do
     expect(Strings::Numeral.ordinalize("12.100", trailing_zeros: true))
       .to eq("twelfth and one hundred thousandths")
   end
+
+  it "checks value in strict mode as not a number" do
+    expect {
+      Strings::Numeral.ordinalize("unknown", strict: true)
+    }.to raise_error(Strings::Numeral::Error, "not a number: \"unknown\"")
+  end
 end

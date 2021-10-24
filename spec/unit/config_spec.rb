@@ -33,6 +33,14 @@ RSpec.describe Strings::Numeral, "configuration" do
       .to eq("one thousand; two hundred thirty four zlotys dot five seven groszy")
   end
 
+  it "configures strict mode and validates value as not a number" do
+    numeral = Strings::Numeral.new(strict: true)
+
+    expect {
+      numeral.monetize("strict")
+    }.to raise_error(Strings::Numeral::Error, "not a number: \"strict\"")
+  end
+
   it "configures settings at runtime using keyword arguments" do
     numeral = Strings::Numeral.new
 

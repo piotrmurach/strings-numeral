@@ -200,6 +200,9 @@ module Strings
       }
     }.freeze
 
+    # Global instance
+    #
+    # @api private
     def self.instance
       @instance ||= Numeral.new
     end
@@ -281,6 +284,7 @@ module Strings
     #
     # @api public
     def cardinalize(num, **options)
+      check_number(num, **options)
       convert_numeral(num, **options)
     end
     alias cardinalise cardinalize
@@ -300,6 +304,7 @@ module Strings
     #
     # @api public
     def ordinalize(num, **options)
+      check_number(num, **options)
       if options[:short]
         ordinalize_short(num)
       else
@@ -361,6 +366,7 @@ module Strings
     #
     # @api public
     def monetize(num, **options)
+      check_number(num, **options)
       sep = options.fetch(:separator, @configuration.separator)
       curr_name = options.fetch(:currency, @configuration.currency)
       n = format("%0.2f", num.to_s)
@@ -397,11 +403,14 @@ module Strings
     #
     # @param [Integer] num
     #   the number to convert
+    # @param [Boolean] strict
+    #   whether or not to validate input is a number
     #
     # @return [String]
     #
     # @api public
-    def romanize(num)
+    def romanize(num, strict: configuration.strict)
+      check_number(num, strict: strict)
       n = num.to_i
 
       if n < 1 || n > 4999
@@ -418,6 +427,37 @@ module Strings
     end
 
     private
+
+    # Check whether the value is a number when in strict mode
+    #
+    # @api private
+    def check_number(value, **options)
+      strict = options.fetch(:strict, @configuration.strict)
+      strict && !number?(value) && raise_not_number(value)
+    end
+
+    # Check whether or not value is a number
+    #
+    # @param [Object] value
+    #   the value to check
+    #
+    # @return [Boolean]
+    #
+    # @api private
+    def number?(value)
+      !Float(value).nil?
+    rescue TypeError, ArgumentError
+      false
+    end
+
+    # Raise not a number error
+    #
+    # @raise [Error]
+    #
+    # @api private
+    def raise_not_number(value)
+      raise Error, "not a number: #{value.inspect}"
+    end
 
     # Convert a number into a numeral
     #

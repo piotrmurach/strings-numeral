@@ -29,4 +29,10 @@ RSpec.describe Strings::Numeral, "#romanize" do
       Strings::Numeral.romanize(0)
     }.to raise_error(Strings::Numeral::Error, "'0' is out of range")
   end
+
+  it "checks value in strict mode as not a number" do
+    expect {
+      Strings::Numeral.romanize("unknown", strict: true)
+    }.to raise_error(Strings::Numeral::Error, "not a number: \"unknown\"")
+  end
 end
